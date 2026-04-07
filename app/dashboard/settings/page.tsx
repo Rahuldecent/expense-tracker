@@ -154,7 +154,7 @@ function SettingsContent() {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in max-w-3xl">
+    <div className="space-y-6 animate-fade-in max-w-3xl w-full">
       <div>
         <h1 className="text-2xl font-bold text-white">Settings</h1>
         <p className="text-sm text-slate-400 mt-1">Configure your expense tracker</p>
@@ -163,7 +163,7 @@ function SettingsContent() {
       {/* Notification */}
       {notification && (
         <div
-          className={`p-4 rounded-xl border text-sm flex items-start gap-3 ${
+          className={`p-4 rounded-xl border text-sm flex items-start gap-3 flex-wrap ${
             notification.type === 'success'
               ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
               : 'bg-red-500/10 border-red-500/30 text-red-300'
@@ -191,7 +191,7 @@ function SettingsContent() {
         <CardContent>
           <div className="space-y-4">
             {/* Status */}
-            <div className="flex items-center justify-between p-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
+            <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
               <div className="flex items-center gap-3">
                 <div className={`w-2.5 h-2.5 rounded-full ${gmailStatus?.connected ? 'bg-emerald-500' : 'bg-slate-600'}`} />
                 <div>
@@ -222,12 +222,12 @@ function SettingsContent() {
             {/* Cron info */}
             <div className="p-3 rounded-xl bg-violet-500/10 border border-violet-500/20 text-xs text-slate-400">
               <p className="font-medium text-violet-300 mb-1">⏰ Automatic Schedule</p>
-              <p>Emails are automatically fetched daily at <strong className="text-white">11:00 PM</strong> (server time).</p>
+              <p>Emails are automatically fetched daily at <strong className="text-white">10:30 PM IST</strong> (5:00 PM UTC).</p>
             </div>
 
             {/* Manual trigger */}
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="text-sm text-white font-medium">Manual Email Fetch</p>
                   <p className="text-xs text-slate-500 mt-0.5">Fetch bank emails from the selected period</p>
@@ -269,7 +269,7 @@ function SettingsContent() {
             {/* Fetch result */}
             {fetchResult && (
               <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50 text-xs">
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {[
                     { label: 'Total Found', value: fetchResult.total },
                     { label: 'Processed', value: fetchResult.processed, color: 'text-emerald-400' },
@@ -427,7 +427,7 @@ function SettingsContent() {
               { key: 'GOOGLE_CLIENT_SECRET', description: 'Google OAuth client secret' },
               { key: 'GMAIL_REDIRECT_URI', description: 'OAuth callback URL' },
             ].map((env) => (
-              <div key={env.key} className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-800/30">
+              <div key={env.key} className="flex flex-wrap items-center gap-2 p-2.5 rounded-lg bg-slate-800/30">
                 <code className="text-xs text-violet-400 font-mono bg-violet-500/10 px-2 py-0.5 rounded">
                   {env.key}
                 </code>
@@ -474,7 +474,7 @@ function SettingsContent() {
       {/* App info */}
       <div className="text-center text-xs text-slate-600 py-4">
         <p>ExpenseTracker v1.0.0 · Built with Next.js 14, MongoDB, Gmail API</p>
-        <p className="mt-1">Cron: Daily at 23:00 (11 PM server time)</p>
+        <p className="mt-1">Cron: Daily at 17:00 UTC (10:30 PM IST)</p>
       </div>
     </div>
   )

@@ -12,7 +12,11 @@ const PAGE_TITLES: Record<string, { title: string; subtitle: string }> = {
   '/dashboard/settings': { title: 'Settings', subtitle: 'App configuration' },
 }
 
-export default function Header() {
+interface HeaderProps {
+  onMenuClick: () => void
+}
+
+export default function Header({ onMenuClick }: HeaderProps) {
   const { data: session } = useSession()
   const pathname = usePathname()
   const [timeStr, setTimeStr] = useState('')
@@ -35,15 +39,29 @@ export default function Header() {
   const pageInfo = PAGE_TITLES[pathname] || { title: 'Dashboard', subtitle: '' }
 
   return (
-    <header className="h-16 glass border-b border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
-      {/* Page title */}
-      <div>
-        <h2 className="text-lg font-semibold text-white leading-none">{pageInfo.title}</h2>
-        <p className="text-xs text-slate-500 mt-0.5">{pageInfo.subtitle}</p>
+    <header className="h-16 glass border-b border-slate-800/50 flex items-center justify-between px-4 md:px-6 sticky top-0 z-30">
+      {/* Hamburger + Page title */}
+      <div className="flex items-center gap-3">
+        {/* Hamburger — mobile only */}
+        <button
+          onClick={onMenuClick}
+          className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors"
+          aria-label="Open sidebar"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <rect y="3" width="20" height="2" rx="1" />
+            <rect y="9" width="20" height="2" rx="1" />
+            <rect y="15" width="20" height="2" rx="1" />
+          </svg>
+        </button>
+        <div>
+          <h2 className="text-lg font-semibold text-white leading-none">{pageInfo.title}</h2>
+          <p className="text-xs text-slate-500 mt-0.5 hidden sm:block">{pageInfo.subtitle}</p>
+        </div>
       </div>
 
       {/* Right side */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3 md:gap-4">
         {/* Date/Time */}
         <div className="hidden md:block text-right">
           <p className="text-xs text-slate-400">{dateStr}</p>
@@ -51,7 +69,7 @@ export default function Header() {
         </div>
 
         {/* Divider */}
-        <div className="w-px h-8 bg-slate-700/50" />
+        <div className="hidden md:block w-px h-8 bg-slate-700/50" />
 
         {/* User */}
         <div className="flex items-center gap-3">
