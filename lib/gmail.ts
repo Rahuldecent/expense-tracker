@@ -194,6 +194,22 @@ export async function updateLastFetchTime() {
   await Settings.findOneAndUpdate({}, { lastEmailFetch: new Date() }, { upsert: true })
 }
 
+export async function clearGmailTokens() {
+  await connectDB()
+  await Settings.findOneAndUpdate(
+    {},
+    {
+      $unset: {
+        gmailAccessToken: '',
+        gmailRefreshToken: '',
+        gmailTokenExpiry: '',
+        gmailEmail: '',
+      },
+    },
+    { upsert: false }
+  )
+}
+
 export async function getGmailStatus() {
   await connectDB()
   const settings = await Settings.findOne({})

@@ -76,7 +76,6 @@ const TransactionSchema = new Schema<ITransactionDocument>(
 TransactionSchema.index({ date: -1 })
 TransactionSchema.index({ category: 1 })
 TransactionSchema.index({ type: 1 })
-TransactionSchema.index({ emailId: 1 }, { unique: true, sparse: true })
 
 const Transaction: Model<ITransactionDocument> =
   mongoose.models.Transaction ||

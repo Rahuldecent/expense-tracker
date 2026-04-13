@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import connectDB from '@/lib/mongodb'
 import Transaction from '@/lib/models/Transaction'
-import { fetchBankEmails, updateLastFetchTime, getAuthenticatedClient, getOrCreateLabel, moveEmailToLabel } from '@/lib/gmail'
+import { fetchBankEmails, updateLastFetchTime, getAuthenticatedClient, getOrCreateLabel, moveEmailToLabel, clearGmailTokens } from '@/lib/gmail'
 import { parseEmailBody, enrichTransaction } from '@/lib/email-parser'
 import { google } from 'googleapis'
 
@@ -110,6 +110,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'Gmail not connected. Please authenticate in Settings.' },
         { status: 503 }
+      )
+    }
+
+    if (
+      error.response?.data?.error === 'invalid_grant' ||
+      error.message?.includes('invalid_grant')
+    ) {
+      await clearGmailTokens().catch(() => {})
+      return NextResponse.json(
+        { error: 'Gmail token expired or revoked. Please reconnect Gmail in Settings.' },
+        { status: 401 }
       )
     }
 
