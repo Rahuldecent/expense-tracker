@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 }
 
 // node-cron only runs in local dev (not on Vercel — use vercel.json crons instead)
+console.log('[Layout] Checking environment for cron jobs...',typeof window,"window", process.env.NODE_ENV)
 if (typeof window === 'undefined' && process.env.NODE_ENV === 'development') {
   import('@/lib/cron').then(({ startCronJobs }) => {
     startCronJobs()

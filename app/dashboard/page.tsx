@@ -6,6 +6,7 @@ import ExpenseLineChart from '@/components/dashboard/ExpenseLineChart'
 import CategoryPieChart from '@/components/dashboard/CategoryPieChart'
 import RecentTransactions from '@/components/dashboard/RecentTransactions'
 import BudgetProgress from '@/components/dashboard/BudgetProgress'
+import AverageSpend from '@/components/dashboard/AverageSpend'
 import { CategoryData, ITransaction } from '@/types'
 
 interface DashboardData {
@@ -92,6 +93,9 @@ export default function DashboardPage() {
           loading={loading}
         />
       </div>
+
+      {/* Average spend */}
+      <AverageSpend />
 
       {/* Charts row */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
